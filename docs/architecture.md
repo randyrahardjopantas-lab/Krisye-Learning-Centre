@@ -4,14 +4,22 @@ Dokumen lengkap: [Krisye LMS: Arsitektur Sistem](https://claude.ai/artifact/Q4qA
 
 ## Teknologi
 
+Aplikasi berjalan di hosting milik kantor (keputusan 2026-11-24). Jenis hosting masih perlu dipastikan: harus server/VPS yang bisa menjalankan Docker atau Node.js. Bila shared hosting (hanya PHP), jalur cadangan Laravel + MySQL.
+
 | Bagian | Pilihan |
 | --- | --- |
-| Aplikasi web | Next.js, TypeScript, di Vercel |
-| Database | PostgreSQL di Supabase (region Singapura), Row Level Security |
-| Login | Supabase Auth dengan Google; hanya email yang didaftarkan pengelola |
-| File | Supabase Storage |
-| Email | Resend (Rilis 2) |
+| Aplikasi web | Next.js, TypeScript, server Node.js di Docker |
+| Database | PostgreSQL 16 di server yang sama |
+| Login | Auth.js dengan Google (project Google Cloud atas nama pantasfoundation@gmail.com); hanya email yang didaftarkan pengelola |
+| File | MinIO (penyimpanan gaya S3) di disk server |
+| Pemasangan | Docker Compose: app, postgres, minio, caddy (HTTPS) |
+| Backup | Harian, disalin ke Google Drive pantasfoundation@gmail.com |
+| Email | SMTP (Rilis 2) |
 | CI | GitHub Actions: cek tipe, lint, tes di setiap PR |
+
+Server minimal (perkiraan): Ubuntu 22.04+, 2 vCPU, 4 GB RAM, 40 GB disk, domain + HTTPS.
+
+Perawat aplikasi setelah peluncuran: Ve dan Josep. Domain: ditentukan nanti.
 
 ## Model data
 
@@ -30,6 +38,6 @@ Lapisan Krisye:
 ## Aturan yang mengikat kode
 
 - Angka aturan (bobot, batas lulus) disimpan di database, tidak ditulis langsung di kode.
-- Hak akses ditegakkan dengan Row Level Security dan diuji di tes otomatis.
+- Hak akses ditegakkan di server aplikasi untuk setiap permintaan dan diuji di tes otomatis; Row Level Security sebagai lapis kedua.
 - Nomor sertifikat dibuat di dalam transaksi database agar tidak ganda.
 - Produksi hanya dideploy dari `main`.

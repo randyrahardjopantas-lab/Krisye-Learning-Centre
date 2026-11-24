@@ -34,3 +34,4 @@ Semua tanggal adalah usulan.
 | 2026-11-24 | Sertifikat resmi bernomor (KLC/tahun/L{level}/urut), bertanda tangan, dengan QR verifikasi |
 | 2026-11-24 | Data organisasi masih berubah: perusahaan, departemen, posisi, senioritas jadi data master yang bisa diubah pengelola |
 | 2026-11-24 | Phase 1 dan matriks naik level disetujui; lanjut ke arsitektur |
+| 2026-11-24 | Hosting memakai server kantor (jenis belum dipastikan); akun layanan pantasfoundation@gmail.com; domain menyusul; perawat aplikasi Ve dan Josep |
