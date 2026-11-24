@@ -1,0 +1,242 @@
+<title>Krisye Classroom</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: app shell — top bar with role switch, side nav (tabs on phone), working pane */
+:root{
+  --paper:#f4f7f6; --surface:#ffffff; --ink:#18282e; --muted:#5b6d72; --line:#dbe3e1;
+  --teal:#0e6a60; --teal-soft:#e2f0ed; --saffron:#c98a12; --saffron-soft:#fbf0d9;
+  --good:#1f7a3f; --warn:#a8650b; --crit:#b3261e;
+  --display:"Plus Jakarta Sans",system-ui,sans-serif; --body:"Plus Jakarta Sans",system-ui,sans-serif; --mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#0f1719; --surface:#162226; --ink:#e3ecea; --muted:#93a6a9; --line:#26363a;
+  --teal:#4cc0ad; --teal-soft:#173a36; --saffron:#e6b04a; --saffron-soft:#3a2e15;
+  --good:#5fc27f; --warn:#e3a54a; --crit:#f08a80; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#0f1719; --surface:#162226; --ink:#e3ecea; --muted:#93a6a9; --line:#26363a;
+  --teal:#4cc0ad; --teal-soft:#173a36; --saffron:#e6b04a; --saffron-soft:#3a2e15;
+  --good:#5fc27f; --warn:#e3a54a; --crit:#f08a80; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5}
+.topbar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;padding-block:14px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));background:var(--surface);border-bottom:1px solid var(--line)}
+.brand{display:flex;gap:10px;align-items:center;font-family:var(--display);font-weight:800;letter-spacing:-.01em}
+.brand .mark{width:30px;height:30px;border-radius:8px;background:var(--teal);color:var(--surface);display:grid;place-items:center;font-size:14px}
+.brand small{display:block;font-weight:500;font-size:12px;color:var(--muted);letter-spacing:0}
+.roles{display:flex;gap:4px;background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:3px}
+.roles button{border:0;background:none;font:inherit;font-size:13px;font-weight:600;color:var(--muted);padding:6px 12px;border-radius:7px;cursor:pointer}
+.roles button[aria-pressed="true"]{background:var(--surface);color:var(--teal);box-shadow:0 1px 2px rgba(0,0,0,.08)}
+.tag{font-family:var(--mono);font-size:11px;color:var(--warn);background:var(--saffron-soft);padding:3px 8px;border-radius:999px}
+.shell{display:grid;grid-template-columns:220px 1fr;min-height:calc(100vh - 62px)}
+nav.side{border-right:1px solid var(--line);padding:18px 12px;display:flex;flex-direction:column;gap:2px}
+nav.side .who{padding:0 10px 14px;font-size:13px;color:var(--muted)}
+nav.side .who b{display:block;color:var(--ink);font-size:14px}
+nav.side button{text-align:left;border:0;background:none;font:inherit;font-weight:500;color:var(--ink);padding:9px 10px;border-radius:8px;cursor:pointer}
+nav.side button:hover{background:var(--teal-soft)}
+nav.side button[aria-current="page"]{background:var(--teal-soft);color:var(--teal);font-weight:700}
+main{padding-block:24px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));min-width:0;max-width:1040px}
+h1{font-family:var(--display);font-size:26px;letter-spacing:-.02em;margin:0 0 4px;text-wrap:balance}
+h2{font-family:var(--display);font-size:16px;margin:0 0 12px}
+.sub{color:var(--muted);margin:0 0 22px}
+.grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px;min-width:0}
+.next{border-color:var(--teal);background:linear-gradient(0deg,var(--surface),var(--surface))}
+.next .when{font-family:var(--mono);font-size:13px;color:var(--teal)}
+.next .title{font-family:var(--display);font-size:19px;font-weight:700;margin:4px 0 2px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.btn{font:inherit;font-size:14px;font-weight:600;border-radius:8px;padding:8px 14px;cursor:pointer;border:1px solid var(--line);background:var(--surface);color:var(--ink)}
+.btn.primary{background:var(--teal);border-color:var(--teal);color:var(--surface)}
+.btn:focus-visible,.roles button:focus-visible,nav.side button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--saffron);outline-offset:2px}
+.btn[disabled]{opacity:.6;cursor:default}
+.list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.list li{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:10px 0;border-top:1px solid var(--line)}
+.list li:first-child{border-top:0}
+.list .meta{font-size:13px;color:var(--muted)}
+.pill{font-size:12px;font-weight:600;padding:3px 9px;border-radius:999px;white-space:nowrap}
+.pill.good{color:var(--good);background:color-mix(in srgb,var(--good) 14%,transparent)}
+.pill.warn{color:var(--warn);background:color-mix(in srgb,var(--warn) 14%,transparent)}
+.pill.crit{color:var(--crit);background:color-mix(in srgb,var(--crit) 14%,transparent)}
+.pill.info{color:var(--teal);background:var(--teal-soft)}
+.ladder{display:grid;grid-template-columns:repeat(11,1fr);gap:4px;margin:8px 0 6px}
+.ladder div{height:34px;border-radius:6px;background:var(--paper);border:1px solid var(--line);display:grid;place-items:center;font-family:var(--mono);font-size:12px;color:var(--muted)}
+.ladder .done{background:var(--teal);border-color:var(--teal);color:var(--surface)}
+.ladder .now{background:var(--saffron-soft);border:2px solid var(--saffron);color:var(--ink);font-weight:600}
+.ladder-cap{font-size:13px;color:var(--muted)}
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin:0 0 16px;overflow-x:auto}
+.tabs button{border:0;background:none;font:inherit;font-weight:600;color:var(--muted);padding:10px 12px;border-bottom:2px solid transparent;cursor:pointer;white-space:nowrap}
+.tabs button[aria-selected="true"]{color:var(--teal);border-bottom-color:var(--teal)}
+.week{display:grid;grid-template-columns:56px 1fr auto;gap:14px;align-items:start;padding:14px 0;border-top:1px solid var(--line)}
+.week:first-child{border-top:0}
+.week .no{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.week .files{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.file{font-size:12px;border:1px solid var(--line);border-radius:6px;padding:2px 8px;color:var(--muted)}
+.q{padding:14px 0;border-top:1px solid var(--line)}
+.q:first-of-type{border-top:0}
+.q p{margin:0 0 8px;font-weight:600}
+.q label{display:flex;gap:8px;align-items:center;padding:4px 0;cursor:pointer}
+.table-wrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:middle}
+th{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:600}
+td.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+input[type=number],select{font:inherit;font-size:14px;padding:6px 8px;border:1px solid var(--line);border-radius:6px;background:var(--surface);color:var(--ink);width:80px}
+select{width:auto}
+.stat{font-family:var(--display);font-size:30px;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.stat-label{font-size:13px;color:var(--muted)}
+.bars{display:flex;flex-direction:column;gap:6px}
+.bar{display:grid;grid-template-columns:150px 1fr 24px;gap:10px;align-items:center;font-size:13px}
+.bar .track{height:12px;background:var(--paper);border-radius:4px;overflow:hidden}
+.bar .fill{height:100%;background:var(--teal);border-radius:4px}
+.bar span:last-child{font-family:var(--mono);text-align:right}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(20px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--paper);padding:10px 16px;border-radius:10px;font-size:14px;font-weight:600}
+.note{font-size:13px;color:var(--muted);margin-top:10px}
+@media (max-width:760px){
+  .shell{grid-template-columns:1fr}
+  nav.side{flex-direction:row;overflow-x:auto;border-right:0;border-bottom:1px solid var(--line);padding:8px max(16px,env(safe-area-inset-right,0px)) 8px max(16px,env(safe-area-inset-left,0px))}
+  nav.side .who{display:none}
+  nav.side button{white-space:nowrap}
+  .week{grid-template-columns:1fr}
+  .bar{grid-template-columns:110px 1fr 24px}
+  .ladder div{height:28px;font-size:11px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<header class="topbar">
+  <div class="brand"><div class="mark">K</div><div>Krisye Learning Centre<small>Ruang kelas daring</small></div></div>
+  <div class="row">
+    <div class="roles" role="group" aria-label="Lihat sebagai">
+      <button id="role-peserta" data-role="peserta" aria-pressed="true">Peserta</button>
+      <button id="role-trainer" data-role="trainer" aria-pressed="false">Trainer</button>
+      <button id="role-pengelola" data-role="pengelola" aria-pressed="false">Pengelola</button>
+    </div>
+    <span class="tag">Prototipe · data contoh</span>
+  </div>
+</header>
+<div class="shell">
+  <nav class="side" id="nav" aria-label="Menu"></nav>
+  <main id="view"></main>
+</div>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+const LEVELS=["Survival & Kesadaran","Logika","Kesadaran Finansial","Digital Literacy & AI","Administrasi","Public Speaking & CS","Keprofesian","Finance Lanjutan","Networking","Negosiasi","Managerial"];
+const PEOPLE={peserta:{name:"Ayu (contoh)",org:"Anak usaha A",level:2},trainer:{name:"Randy Rahardjo, S.Phil",org:"Pantas Foundation"},pengelola:{name:"Ve (Zahra Verisca)",org:"PJ program"}};
+const NAV={
+  peserta:[["beranda","Beranda"],["kelas","Kelas saya"],["tes","Tes penempatan"],["progres","Progres saya"]],
+  trainer:[["tberanda","Beranda"],["kelas","Kelas Level 2"],["nilai","Penilaian"]],
+  pengelola:[["dasbor","Dasbor"],["kelola","Kelola program"]]
+};
+const WEEKS=[
+  {no:"Mg 1",date:"Rab 6 Jan",topic:"Kesadaran mengelola uang pribadi",files:["Slide.pdf","Lembar kerja.xlsx"],done:true},
+  {no:"Mg 2",date:"Rab 13 Jan",topic:"Mulai berpikir mandiri secara finansial",files:["Slide.pdf","Video rekaman"],done:true},
+  {no:"Mg 3",date:"Rab 20 Jan",topic:"Menyusun anggaran bulanan",files:["Slide.pdf"],done:false},
+  {no:"Mg 4",date:"Rab 27 Jan",topic:"Fondasi menuju Level 7 (Finance Lanjutan)",files:[],done:false}
+];
+const SUBMISSIONS=[
+  {name:"Ayu (contoh)",org:"Anak usaha A",task:"Catatan pengeluaran 1 minggu",score:null,hadir:"3/3"},
+  {name:"Bima (contoh)",org:"Pantas Foundation",task:"Catatan pengeluaran 1 minggu",score:82,hadir:"3/3"},
+  {name:"Citra (contoh)",org:"Anak usaha C",task:"Catatan pengeluaran 1 minggu",score:null,hadir:"2/3"},
+  {name:"Dewi (contoh)",org:"Pantas Foundation",task:"Catatan pengeluaran 1 minggu",score:74,hadir:"3/3"}
+];
+const QUEUE=[
+  {name:"Bima (contoh)",from:2,by:"Randy Rahardjo, S.Phil",note:"Nilai rata-rata 84, hadir 12/12"},
+  {name:"Eko (contoh)",from:0,by:"Trainer Level 0",note:"Nilai rata-rata 79, hadir 11/12"}
+];
+const DIST=[[0,3],[1,2],[2,4],[3,2],[4,1],[5,1]];
+const CLASSES=[
+  ["Level 0 · Survival & Kesadaran","Orientation","Randy Rahardjo, S.Phil","Senin 10.00",3],
+  ["Level 1 · Logika","Skills related","(belum ditentukan)","Selasa 10.00",2],
+  ["Level 2 · Kesadaran Finansial","Skills related","Randy Rahardjo, S.Phil","Rabu 10.00",4],
+  ["Level 3 · Digital Literacy & AI","Skills related","Randy Rahardjo, S.Phil","Kamis 10.00",2],
+  ["Refresher Level 0-2","Refresher","Bergiliran","Jumat 10.00",2]
+];
+const state={role:"peserta",view:"beranda",hadir:false,kumpul:false,tes:null,kelasTab:"pertemuan",kelolaTab:"kelas",queue:QUEUE.slice(),usul:{}};
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+let toastT;function toast(m){const t=$("#toast");t.textContent=m;t.hidden=false;clearTimeout(toastT);toastT=setTimeout(()=>t.hidden=true,2400)}
+
+function ladder(cur){return `<div class="ladder" aria-label="Level ${cur} dari 10">${LEVELS.map((_,i)=>`<div class="${i<cur?"done":i===cur?"now":""}" title="Level ${i} · ${esc(LEVELS[i])}">${i}</div>`).join("")}</div>`}
+
+const VIEWS={
+beranda(){const p=PEOPLE.peserta;return `
+  <h1>Selamat pagi, Ayu</h1><p class="sub">Level ${p.level} · ${LEVELS[p.level]} · ${esc(p.org)}</p>
+  <div class="grid">
+    <section class="panel next"><div class="when">RABU 20 JAN · 10.00-11.30</div><div class="title">Menyusun anggaran bulanan</div>
+      <div class="meta" style="color:var(--muted);font-size:14px;margin-bottom:14px">Level 2 · Randy Rahardjo, S.Phil · Google Meet</div>
+      <div class="row"><button class="btn primary" id="join" onclick="toast('Membuka Google Meet (contoh)')">Gabung sesi</button>
+      <button class="btn" id="hadir" onclick="state.hadir=true;render();toast('Presensi tercatat: hadir')" ${state.hadir?"disabled":""}>${state.hadir?"Hadir tercatat":"Isi presensi"}</button></div></section>
+    <section class="panel"><h2>Tugas yang perlu dikumpulkan</h2><ul class="list">
+      <li><div>Catatan pengeluaran 1 minggu<div class="meta">Tenggat Selasa 19 Jan, 23.59</div></div>${state.kumpul?'<span class="pill good">Terkumpul</span>':'<button class="btn" id="kumpul" onclick="state.kumpul=true;render();toast(\'Tugas terkumpul\')">Kumpulkan</button>'}</li>
+      <li><div>Kuis Mg 2: berpikir mandiri<div class="meta">10 soal pilihan ganda</div></div><span class="pill good">Nilai 90</span></li></ul></section>
+    <section class="panel"><h2>Level saya</h2>${ladder(p.level)}<div class="ladder-cap">Syarat naik ke Level 3: nilai rata-rata ≥ 75 dan hadir ≥ 80% (contoh syarat)</div></section>
+    <section class="panel"><h2>Pengumuman</h2><ul class="list">
+      <li><div>Tes penempatan peserta baru dibuka sampai 15 Jan<div class="meta">Ve · 4 Jan</div></div></li>
+      <li><div>Materi Mg 2 sudah diunggah<div class="meta">Randy · 13 Jan</div></div></li></ul></section>
+  </div>`},
+kelas(){const t=state.kelasTab;const isT=state.role==="trainer";return `
+  <h1>Level 2 · Kesadaran Finansial</h1><p class="sub">Skills related · Rabu 10.00-11.30 · Trainer: Randy Rahardjo, S.Phil · 4 peserta</p>
+  <div class="tabs" role="tablist">${[["pertemuan","Pertemuan"],["tugas","Tugas"],["diskusi","Diskusi"],["anggota","Anggota"]].map(([k,l])=>`<button role="tab" id="tab-${k}" aria-selected="${t===k}" onclick="state.kelasTab='${k}';render()">${l}</button>`).join("")}</div>
+  <section class="panel">${
+   t==="pertemuan"?WEEKS.map(w=>`<div class="week"><div class="no">${w.no}<br>${w.date}</div><div><b>${esc(w.topic)}</b><div class="files">${w.files.length?w.files.map(f=>`<span class="file">${esc(f)}</span>`).join(""):'<span class="meta" style="color:var(--muted);font-size:13px">Materi belum diunggah</span>'}</div></div><div>${w.done?'<span class="pill good">Selesai</span>':'<span class="pill info">Akan datang</span>'}</div></div>`).join("")+(isT?'<div class="row" style="margin-top:12px"><button class="btn primary" onclick="toast(\'Form unggah materi (contoh)\')">Unggah materi</button><button class="btn" onclick="toast(\'Pilih materi dari angkatan lalu (contoh)\')">Pakai materi lama</button></div>':"")
+   :t==="tugas"?`<ul class="list"><li><div>Catatan pengeluaran 1 minggu<div class="meta">Tugas · tenggat 19 Jan</div></div><span class="pill warn">2 belum dinilai</span></li><li><div>Kuis Mg 2: berpikir mandiri<div class="meta">Kuis otomatis · 10 soal</div></div><span class="pill good">Selesai</span></li></ul>${isT?'<div class="row" style="margin-top:12px"><button class="btn primary" onclick="toast(\'Form tugas baru (contoh)\')">Buat tugas</button><button class="btn" onclick="toast(\'Form kuis baru (contoh)\')">Buat kuis</button></div>':""}`
+   :t==="diskusi"?`<ul class="list"><li><div><b>Bima (contoh)</b>: Apakah tabungan darurat dihitung sebagai pengeluaran?<div class="meta">2 balasan · 14 Jan</div></div></li><li><div><b>Randy</b>: Silakan bagikan satu kebiasaan belanja yang ingin kamu ubah.<div class="meta">5 balasan · 13 Jan</div></div></li></ul>`
+   :`<ul class="list">${SUBMISSIONS.map(s=>`<li><div>${esc(s.name)}<div class="meta">${esc(s.org)}</div></div><span class="meta">Hadir ${s.hadir}</span></li>`).join("")}</ul>`
+  }</section>`},
+tes(){const qs=[
+  ["Atasan meminta laporan 'secepatnya'. Langkah pertama yang paling tepat?",["Langsung mengerjakan","Menanyakan tenggat dan format yang diinginkan","Menunggu diingatkan"],1],
+  ["Gaji Rp4.000.000, pengeluaran tetap Rp2.800.000. Berapa persen sisa gaji?",["20%","30%","42%"],1],
+  ["Cara paling efisien mencari contoh surat penawaran?",["Bertanya ke teman","Mencari dengan kata kunci yang spesifik","Menulis dari nol"],1]];
+ if(state.tes!==null){return `<h1>Tes penempatan</h1><p class="sub">Hasil terkirim ke pengelola</p><section class="panel"><h2>Skor ${state.tes}/3</h2>${ladder(state.tes>=3?2:state.tes>=2?1:0)}<p>Usulan level awal: <b>Level ${state.tes>=3?2:state.tes>=2?1:0} · ${LEVELS[state.tes>=3?2:state.tes>=2?1:0]}</b></p><span class="pill warn">Menunggu persetujuan pengelola</span><div class="row" style="margin-top:14px"><button class="btn" onclick="state.tes=null;render()">Ulangi contoh</button></div></section>`}
+ return `<h1>Tes penempatan</h1><p class="sub">3 dari 30 soal contoh · waktu 45 menit · hasil menentukan level awal</p>
+  <section class="panel"><form id="tesform">${qs.map((q,i)=>`<div class="q"><p>${i+1}. ${esc(q[0])}</p>${q[1].map((o,j)=>`<label><input type="radio" id="q${i}o${j}" name="q${i}" value="${j}"> ${esc(o)}</label>`).join("")}</div>`).join("")}
+  <div class="row" style="margin-top:12px"><button class="btn primary" type="submit">Kirim jawaban</button></div></form></section>`},
+progres(){const p=PEOPLE.peserta;return `<h1>Progres saya</h1><p class="sub">Dari Level 0 Fondasi menuju Level 10 Managerial</p>
+  <section class="panel"><h2>Tangga level</h2>${ladder(p.level)}<div class="ladder-cap">Sekarang: Level ${p.level} · ${LEVELS[p.level]}. Berikutnya: Level ${p.level+1} · ${LEVELS[p.level+1]}</div></section>
+  <div class="grid" style="margin-top:16px">
+   <section class="panel"><h2>Riwayat</h2><ul class="list"><li><div>Level 0 · Survival & Kesadaran<div class="meta">Nilai 81 · hadir 12/12</div></div><span class="pill good">Lulus</span></li><li><div>Level 1 · Logika<div class="meta">Nilai 77 · hadir 11/12</div></div><span class="pill good">Lulus</span></li><li><div>Level 2 · Kesadaran Finansial<div class="meta">Berjalan · hadir 3/3</div></div><span class="pill info">Aktif</span></li></ul></section>
+   <section class="panel"><h2>Sertifikat</h2><ul class="list"><li><div>Sertifikat Level 0<div class="meta">KLC/2026/L0/007</div></div><button class="btn" onclick="toast('Membuka sertifikat (contoh)')">Lihat</button></li><li><div>Sertifikat Level 1<div class="meta">KLC/2026/L1/004</div></div><button class="btn" onclick="toast('Membuka sertifikat (contoh)')">Lihat</button></li></ul></section>
+  </div>`},
+tberanda(){const todo=SUBMISSIONS.filter(s=>s.score===null).length;return `<h1>Halo, Randy</h1><p class="sub">Trainer Level 0, 2, dan 3</p>
+  <div class="grid">
+   <section class="panel next"><div class="when">RABU 20 JAN · 10.00-11.30</div><div class="title">Level 2 · Menyusun anggaran bulanan</div><div style="color:var(--muted);font-size:14px;margin-bottom:14px">4 peserta · materi sudah diunggah</div><div class="row"><button class="btn primary" onclick="toast('Membuka Google Meet (contoh)')">Mulai sesi</button><button class="btn" onclick="toast('Presensi dibuka untuk peserta')">Buka presensi</button></div></section>
+   <section class="panel"><h2>Perlu dinilai</h2><div class="stat">${todo}</div><div class="stat-label">kumpulan tugas Level 2</div><div class="row" style="margin-top:12px"><button class="btn" onclick="go('nilai')">Buka penilaian</button></div></section>
+   <section class="panel"><h2>Kelas yang saya ajar</h2><ul class="list"><li><div>Level 0 · Survival & Kesadaran<div class="meta">Senin 10.00 · 3 peserta</div></div></li><li><div>Level 2 · Kesadaran Finansial<div class="meta">Rabu 10.00 · 4 peserta</div></div></li><li><div>Level 3 · Digital Literacy & AI<div class="meta">Kamis 10.00 · 2 peserta</div></div></li></ul></section>
+  </div>`},
+nilai(){return `<h1>Penilaian</h1><p class="sub">Level 2 · Catatan pengeluaran 1 minggu</p>
+  <section class="panel"><div class="table-wrap"><table><thead><tr><th>Peserta</th><th>Hadir</th><th>Nilai</th><th>Status</th><th>Naik level?</th></tr></thead><tbody>
+  ${SUBMISSIONS.map((s,i)=>`<tr><td>${esc(s.name)}<div class="meta" style="font-size:12px;color:var(--muted)">${esc(s.org)}</div></td><td class="num">${s.hadir}</td>
+   <td><input type="number" id="score${i}" min="0" max="100" value="${s.score??""}" placeholder="0-100" onchange="SUBMISSIONS[${i}].score=this.value===''?null:+this.value;render()"></td>
+   <td>${s.score===null?'<span class="pill warn">Belum dinilai</span>':'<span class="pill good">Dinilai</span>'}</td>
+   <td><select id="usul${i}" onchange="state.usul[${i}]=this.value;if(this.value)toast('Usulan terkirim ke pengelola')"><option value="">-</option>${["Naik level","Ulang","Refresher"].map(o=>`<option ${state.usul[i]===o?"selected":""}>${o}</option>`).join("")}</select></td></tr>`).join("")}
+  </tbody></table></div><p class="note">Nilai tersimpan otomatis. Usulan naik level baru berlaku setelah disetujui pengelola.</p></section>`},
+dasbor(){const max=Math.max(...DIST.map(d=>d[1]));return `<h1>Dasbor program</h1><p class="sub">Periode Januari 2027 · semua perusahaan</p>
+  <div class="grid">
+   <section class="panel"><div class="stat">13</div><div class="stat-label">peserta aktif (Pantas 7, anak usaha 6)</div></section>
+   <section class="panel"><div class="stat">91%</div><div class="stat-label">kehadiran rata-rata 3 minggu terakhir</div></section>
+   <section class="panel"><div class="stat">${state.queue.length}</div><div class="stat-label">usulan naik level menunggu</div></section>
+  </div>
+  <div class="grid" style="margin-top:16px">
+   <section class="panel"><h2>Sebaran level peserta</h2><div class="bars">${DIST.map(([l,n])=>`<div class="bar"><span>L${l} · ${esc(LEVELS[l])}</span><div class="track"><div class="fill" style="width:${n/max*100}%"></div></div><span>${n}</span></div>`).join("")}</div></section>
+   <section class="panel"><h2>Usulan naik level</h2>${state.queue.length?`<ul class="list">${state.queue.map((q,i)=>`<li><div>${esc(q.name)}: Level ${q.from} → ${q.from+1}<div class="meta">${esc(q.note)} · oleh ${esc(q.by)}</div></div><button class="btn primary" id="ok${i}" onclick="approve(${i})">Setujui</button></li>`).join("")}</ul>`:'<p class="note">Tidak ada usulan yang menunggu.</p>'}</section>
+  </div><p class="note">Semua angka di halaman ini adalah contoh.</p>`},
+kelola(){const t=state.kelolaTab;return `<h1>Kelola program</h1><p class="sub">Kelas, jadwal, giliran trainer, dan peserta</p>
+  <div class="tabs" role="tablist">${[["kelas","Kelas & jadwal"],["peserta","Peserta"],["tes","Tes penempatan"]].map(([k,l])=>`<button role="tab" id="ktab-${k}" aria-selected="${t===k}" onclick="state.kelolaTab='${k}';render()">${l}</button>`).join("")}</div>
+  <section class="panel"><div class="table-wrap">${
+   t==="kelas"?`<table><thead><tr><th>Kelas</th><th>Jenis</th><th>Trainer</th><th>Jadwal</th><th>Peserta</th></tr></thead><tbody>${CLASSES.map(c=>`<tr><td>${esc(c[0])}</td><td><span class="pill info">${c[1]}</span></td><td>${esc(c[2])}</td><td class="num">${c[3]}</td><td class="num">${c[4]}</td></tr>`).join("")}</tbody></table>`
+   :t==="peserta"?`<table><thead><tr><th>Nama</th><th>Perusahaan</th><th>Level</th><th>Hadir</th></tr></thead><tbody>${SUBMISSIONS.map(s=>`<tr><td>${esc(s.name)}</td><td>${esc(s.org)}</td><td class="num">2</td><td class="num">${s.hadir}</td></tr>`).join("")}<tr><td>Eko (contoh)</td><td>Anak usaha B</td><td class="num">0</td><td class="num">3/3</td></tr></tbody></table>`
+   :`<table><thead><tr><th>Peserta baru</th><th>Skor</th><th>Usulan</th><th></th></tr></thead><tbody><tr><td>Fajar (contoh)</td><td class="num">24/30</td><td>Level 1 · Logika</td><td><button class="btn" onclick="this.outerHTML='<span class=&quot;pill good&quot;>Ditetapkan</span>';toast('Fajar masuk kelas Level 1')">Tetapkan</button></td></tr><tr><td>Gita (contoh)</td><td class="num">12/30</td><td>Level 0 · Survival & Kesadaran</td><td><button class="btn" onclick="this.outerHTML='<span class=&quot;pill good&quot;>Ditetapkan</span>';toast('Gita masuk kelas Level 0')">Tetapkan</button></td></tr></tbody></table>`
+  }</div><div class="row" style="margin-top:14px"><button class="btn primary" onclick="toast('Form tambah (contoh)')">Tambah</button><button class="btn" onclick="toast('Ekspor ke Excel (contoh)')">Ekspor</button></div></section>`}
+};
+function approve(i){const q=state.queue.splice(i,1)[0];render();toast(`${q.name.replace(" (contoh)","")} naik ke Level ${q.from+1}, sertifikat diterbitkan`)}
+function go(v){state.view=v;render();window.scrollTo(0,0)}
+function render(){
+  const p=PEOPLE[state.role];
+  $("#nav").innerHTML=`<div class="who"><b>${esc(p.name)}</b>${esc(p.org)}</div>`+NAV[state.role].map(([k,l])=>`<button id="nav-${k}" ${state.view===k?'aria-current="page"':""} onclick="go('${k}')">${l}</button>`).join("");
+  $("#view").innerHTML=VIEWS[state.view]();
+  const f=$("#tesform");if(f)f.onsubmit=e=>{e.preventDefault();const ans=[1,1,1];let s=0;ans.forEach((a,i)=>{const c=f.querySelector(`input[name=q${i}]:checked`);if(c&&+c.value===a)s++});state.tes=s;render()};
+}
+document.querySelectorAll(".roles button").forEach(b=>b.onclick=()=>{state.role=b.dataset.role;state.view=NAV[state.role][0][0];document.querySelectorAll(".roles button").forEach(x=>x.setAttribute("aria-pressed",x===b));render()});
+render();
+</script>
