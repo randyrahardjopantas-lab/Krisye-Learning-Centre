@@ -7,6 +7,7 @@ Dokumen utama ditulis sebagai dokumen hidup (bisa diedit dan dikomentari). Repo 
 | [Krisye LMS Phase 1: Visi, BRD, dan PRD](https://claude.ai/artifact/GJSX2auY1829KcsQugQ3Cy) | Visi, KPI, stakeholder, persona, penugasan training, kerangka Q1-Q4, ruang lingkup MVP, user journey, asumsi, rencana tahap | Disetujui 2026-11-24 |
 | [Rancangan Aplikasi E-Learning](https://claude.ai/artifact/9S4D1fM9yYSCG9Nvy5WiPJ) | Perbandingan Google Classroom vs aplikasi sendiri, fitur per peran, alur, halaman utama, data | Draf |
 | [Krisye LMS: Arsitektur Sistem](https://claude.ai/artifact/Q4qAExhnV3EpSpe4prAbjB) (ringkasan: [architecture.md](architecture.md)) | Pilihan teknologi, diagram komponen, model data, hak akses, alur teknis, risiko | Draf, menunggu persetujuan |
+| [Krisye LMS UI/UX Rilis 1](https://claude.ai/artifact/DcwnjkpgziaQMdQAgFjLgR) | 7 layar: masuk, beranda peserta, kelas (Tugas Kelas), detail tugas, presensi (HP); penilaian trainer, data organisasi pengelola (laptop) | Draf, menunggu tinjauan |
 | [prototype/index.html](prototype/index.html) | Prototipe klik (peserta, trainer, pengelola) dengan data contoh. Hanya alat bantu visual, bukan kode produksi | Draf |
 
 Sumber kurikulum: *Curiculum Krisye Rev.0.1* (11 level, 0-10).
@@ -35,3 +36,4 @@ Semua tanggal adalah usulan.
 | 2026-11-24 | Data organisasi masih berubah: perusahaan, departemen, posisi, senioritas jadi data master yang bisa diubah pengelola |
 | 2026-11-24 | Phase 1 dan matriks naik level disetujui; lanjut ke arsitektur |
 | 2026-11-24 | Hosting memakai server kantor (jenis belum dipastikan); akun layanan pantasfoundation@gmail.com; domain menyusul; perawat aplikasi Ve dan Josep |
+| 2026-11-24 | Lanjut ke UI/UX sambil menunggu konfirmasi jenis hosting dari Josep |
