@@ -4,8 +4,9 @@ Dokumen utama ditulis sebagai dokumen hidup (bisa diedit dan dikomentari). Repo 
 
 | Dokumen | Isi | Status |
 | --- | --- | --- |
-| [Krisye LMS Phase 1: Visi, BRD, dan PRD](https://claude.ai/artifact/GJSX2auY1829KcsQugQ3Cy) | Visi, KPI, stakeholder, persona, penugasan training, kerangka Q1-Q4, ruang lingkup MVP, user journey, asumsi, rencana tahap | Draf, menunggu persetujuan Ve |
+| [Krisye LMS Phase 1: Visi, BRD, dan PRD](https://claude.ai/artifact/GJSX2auY1829KcsQugQ3Cy) | Visi, KPI, stakeholder, persona, penugasan training, kerangka Q1-Q4, ruang lingkup MVP, user journey, asumsi, rencana tahap | Disetujui 2026-11-24 |
 | [Rancangan Aplikasi E-Learning](https://claude.ai/artifact/9S4D1fM9yYSCG9Nvy5WiPJ) | Perbandingan Google Classroom vs aplikasi sendiri, fitur per peran, alur, halaman utama, data | Draf |
+| [Krisye LMS: Arsitektur Sistem](https://claude.ai/artifact/Q4qAExhnV3EpSpe4prAbjB) (ringkasan: [architecture.md](architecture.md)) | Pilihan teknologi, diagram komponen, model data, hak akses, alur teknis, risiko | Draf, menunggu persetujuan |
 | [prototype/index.html](prototype/index.html) | Prototipe klik (peserta, trainer, pengelola) dengan data contoh. Hanya alat bantu visual, bukan kode produksi | Draf |
 
 Sumber kurikulum: *Curiculum Krisye Rev.0.1* (11 level, 0-10).
@@ -32,3 +33,4 @@ Semua tanggal adalah usulan.
 | 2026-11-24 | Syarat naik level memakai matriks di dokumen Phase 1; angka bisa diubah pengelola |
 | 2026-11-24 | Sertifikat resmi bernomor (KLC/tahun/L{level}/urut), bertanda tangan, dengan QR verifikasi |
 | 2026-11-24 | Data organisasi masih berubah: perusahaan, departemen, posisi, senioritas jadi data master yang bisa diubah pengelola |
+| 2026-11-24 | Phase 1 dan matriks naik level disetujui; lanjut ke arsitektur |
