@@ -12,24 +12,23 @@ Sumber kurikulum: *Curiculum Krisye Rev.0.1* (11 level, 0-10).
 
 ## Tahapan
 
-1. Phase 1 disetujui (Des 2026 minggu 1-2)
-2. Arsitektur (Des 2026 minggu 3)
-3. UI/UX (Des 2026 - Jan 2027)
-4. Development MVP (Jan - Feb 2027)
-5. Testing dan UAT (Mar 2027)
-6. Peluncuran (awal Q2 2027). Q1 2027 berjalan di Google Classroom + Sheet.
+1. Phase 1 disetujui (Des 2026 minggu 1)
+2. Arsitektur, logika seperti Google Classroom (Des 2026 minggu 1-2)
+3. UI/UX (Des 2026 minggu 2-3)
+4. Development: Rilis 1 inti kelas (Des 2026 - Jan 2027), Rilis 2 naik level, sertifikat, dasbor (Feb - Mar 2027)
+5. Testing dan UAT: akhir Jan 2027 (Rilis 1), Mar 2027 (Rilis 2)
+6. Peluncuran: Rilis 1 awal Feb 2027, Rilis 2 awal Apr 2027. Januari 2027: tes penempatan dan Orientation lewat Google Forms, hasil diimpor.
 
 Semua tanggal adalah usulan.
 
 ## Keputusan yang sudah diambil
 
-- 2026-11-24: Selesaikan Phase 1 dulu, baru coding.
-
-## Pertanyaan terbuka
-
-1. Jalur 2027: Google Classroom + Sheet dulu, atau langsung aplikasi sendiri?
-2. Apakah semua peserta dan trainer punya akun Google?
-3. Sesi online, tatap muka, atau campuran?
-4. Syarat naik level: nilai minimal, kehadiran minimal, atau keputusan trainer?
-5. Perlukah sertifikat resmi bernomor dan bertanda tangan?
-6. Apakah data departemen, posisi, dan senioritas peserta sudah tersedia?
+| Tanggal | Keputusan |
+| --- | --- |
+| 2026-11-24 | Selesaikan Phase 1 dulu, baru coding |
+| 2026-11-24 | Langsung aplikasi sendiri, logika arsitektur seperti Google Classroom |
+| 2026-11-24 | Semua peserta dan trainer punya akun Google: login dengan Google |
+| 2026-11-24 | Sesi campuran online dan tatap muka: presensi otomatis (online) dan kode/QR (tatap muka) |
+| 2026-11-24 | Syarat naik level memakai matriks di dokumen Phase 1; angka bisa diubah pengelola |
+| 2026-11-24 | Sertifikat resmi bernomor (KLC/tahun/L{level}/urut), bertanda tangan, dengan QR verifikasi |
+| 2026-11-24 | Data organisasi masih berubah: perusahaan, departemen, posisi, senioritas jadi data master yang bisa diubah pengelola |
